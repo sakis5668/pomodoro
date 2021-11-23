@@ -3,6 +3,7 @@ from tkinter import ttk
 from collections import deque
 from frames import Timer
 
+
 class PomodoroTimer(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
