@@ -4,7 +4,7 @@ from collections import deque
 
 
 class Timer(ttk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, show_settings):
         super().__init__(parent)
 
         self.controller = controller
@@ -22,8 +22,16 @@ class Timer(ttk.Frame):
 
         timer_description.grid(row=0, column=0, sticky="W", padx=(10, 0), pady=(10, 0))
 
+        settings_button = ttk.Button(
+            self,
+            text="Settings",
+            command=show_settings,
+            cursor="hand2"
+        )
+        settings_button.grid(row=0, column=1, sticky="E", padx=10, pady=(10,0))
+
         timer_frame = ttk.Frame(self, height="100")
-        timer_frame.grid(row=1, column=0, pady=(10, 0), sticky="NSEW")
+        timer_frame.grid(row=1, column=0, columnspan=2, pady=(10, 0), sticky="NSEW")
 
         timer_counter = ttk.Label(
             timer_frame,
@@ -32,7 +40,7 @@ class Timer(ttk.Frame):
         timer_counter.place(relx=0.5, rely=0.5, anchor="center")
 
         button_container = ttk.Frame(self, padding=10)
-        button_container.grid(row=2, column=0, sticky="EW")
+        button_container.grid(row=2, column=0, columnspan=2, sticky="EW")
         button_container.columnconfigure((0, 1, 2), weight=1)
 
         self.start_button = ttk.Button(
@@ -71,9 +79,9 @@ class Timer(ttk.Frame):
         self.start_button["state"] = "enabled"
         self.stop_button["state"] = "disabled"
 
-        if self._timer_descrement_job:
-            self.after_cancel(self._timer_descrement_job)
-            self._timer_descrement_job = None
+        if self._timer_decrement_job:
+            self.after_cancel(self._timer_decrement_job)
+            self._timer_decrement_job = None
 
     def reset_timer(self):
         self.stop_timer()
@@ -96,7 +104,7 @@ class Timer(ttk.Frame):
                 minutes = int(minutes) - 1
 
             self.current_time.set(f"{minutes:02d}:{seconds:02d}")
-            self._timer_descrement_job = self.after(1000, self.decrement_time)
+            self._timer_decrement_job = self.after(1000, self.decrement_time)
         elif self.timer_running and current_time == "00:00":
             self.controller.timer_schedule.rotate(-1)
             next_up = self.controller.timer_schedule[0]
@@ -112,4 +120,4 @@ class Timer(ttk.Frame):
                 long_break_time = int(self.controller.long_break.get())
                 self.current_time.set(f"{long_break_time:02d}:00")
 
-            self._timer_descrement_job = self.after(1000, self.decrement_time)
+            self._timer_decrement_job = self.after(1000, self.decrement_time)
