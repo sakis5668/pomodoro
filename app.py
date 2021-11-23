@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from collections import deque
-from frames import Timer
+from frames import Timer, Settings
 
 
 class PomodoroTimer(tk.Tk):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -23,9 +24,10 @@ class PomodoroTimer(tk.Tk):
         container.grid()
         container.columnconfigure(0, weight=1)
 
-        timer_frame = Timer(container, self)
-        timer_frame.grid(row=0, column=0, sticky="NESW")
-
+        # timer_frame = Timer(container, self)
+        # timer_frame.grid(row=0, column=0, sticky="NESW")
+        settings_frame = Settings(container, self)
+        settings_frame.grid(row=0, column=0, sticky="NESW")
 
 app = PomodoroTimer()
 app.mainloop()

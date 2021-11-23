@@ -13,7 +13,7 @@ class Timer(ttk.Frame):
 
         self.current_timer_label = tk.StringVar(value=controller.timer_schedule[0])
         self.timer_running = False
-        self._timer_descrement_job = None
+        self._timer_decrement_job = None
 
         timer_description = ttk.Label(
             self,
