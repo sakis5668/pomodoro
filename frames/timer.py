@@ -3,7 +3,6 @@ from tkinter import ttk
 from collections import deque
 
 
-
 class Timer(ttk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
@@ -114,5 +113,3 @@ class Timer(ttk.Frame):
                 self.current_time.set(f"{long_break_time:02d}:00")
 
             self._timer_descrement_job = self.after(1000, self.decrement_time)
-
-
